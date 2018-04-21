@@ -58,7 +58,6 @@ class TfidfDocRanker(object):
         """
         spvec = self.text2spvec(query)
         res = spvec * self.doc_mat
-
         if len(res.data) <= k:
             o_sort = np.argsort(-res.data)
         else:
@@ -66,6 +65,7 @@ class TfidfDocRanker(object):
             o_sort = o[np.argsort(-res.data[o])]
 
         doc_scores = res.data[o_sort]
+        print(doc_scores)
         doc_ids = [self.get_doc_id(i) for i in res.indices[o_sort]]
         return doc_ids, doc_scores
 
@@ -106,7 +106,10 @@ class TfidfDocRanker(object):
 
         # Count IDF
         Ns = self.doc_freqs[wids_unique]
-        idfs = np.log((self.num_docs - Ns + 0.5) / (Ns + 0.5))
+        # idfs = np.log((self.num_docs - Ns + 0.5) / (Ns + 0.5))
+        # Custom IDF score 
+        idfs = np.log( ( 1 + self.num_docs ) / Ns )
+
         idfs[idfs < 0] = 0
 
         # TF-IDF

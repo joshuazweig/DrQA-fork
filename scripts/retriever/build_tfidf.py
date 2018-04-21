@@ -140,7 +140,8 @@ def get_tfidf_matrix(cnts):
     * Nt = number of occurences of term in all documents
     """
     Ns = get_doc_freqs(cnts)
-    idfs = np.log((cnts.shape[1] - Ns + 0.5) / (Ns + 0.5))
+    #idfs = np.log((cnts.shape[1] - Ns + 0.5) / (Ns + 0.5))
+    idfs = np.log( ( 1 + cnts.shape[1] ) / Ns )
     idfs[idfs < 0] = 0
     idfs = sp.diags(idfs, 0)
     tfs = cnts.log1p()

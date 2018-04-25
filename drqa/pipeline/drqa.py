@@ -144,7 +144,8 @@ class DrQA(object):
         """Given a doc, split it into chunks (by paragraph)."""
         curr = []
         curr_len = 0
-        for split in regex.split(r'\n+', doc):
+        #try: 
+        for split in regex.split(r'\n+', doc.decode("utf-8")):
             split = split.strip()
             if len(split) == 0:
                 continue

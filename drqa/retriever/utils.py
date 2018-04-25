@@ -74,8 +74,10 @@ STOPWORDS = {
 
 def normalize(text):
     """Resolve different type of unicode encodings."""
-    return unicodedata.normalize('NFD', text)
-
+    try:
+        return unicodedata.normalize('NFD', text)
+    except:
+        return unicodedata.normalize('NFD', text.decode("utf-8"))
 
 def filter_word(text):
     """Take out english stopwords, punctuation, and compound endings."""
